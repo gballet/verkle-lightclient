@@ -1,7 +1,8 @@
 const std = @import("std");
 const hash = [32]u8;
 const address = [20]u8;
-const big = std.math.big;
+
+const U256 = [32]u8;
 
 pub const nonce = [8]u8;
 pub const BloomByteLength = 256;
@@ -15,8 +16,8 @@ pub const Header = struct {
     txHash: hash,
     receiptHash: hash,
     bloom: Bloom,
-    difficulty: big.int,
-    number: big.int,
+    difficulty: U256,
+    number: U256,
     gasLimit: u4,
     gasUsed: u4,
     time: u4,
@@ -25,7 +26,7 @@ pub const Header = struct {
     nonce: nonce,
 
     // BaseFee was added by EIP-1559 and is ignored in legacy headers.
-    baseFee: ?big.int,
+    baseFee: ?U256,
 
     // The verkle proof is ignored in legacy headers
     VerkleProof: ?[]u8,
@@ -35,7 +36,7 @@ pub const Block = struct {
     header: *Header,
     uncles: []*Header,
     txs: []*Tx,
-    td: big.int,
+    td: U256,
 };
 
 pub const AccessListPair = struct {
@@ -44,15 +45,15 @@ pub const AccessListPair = struct {
 };
 
 pub const Tx = struct {
-    chainId: big.int,
+    chainId: U256,
     nonce: u64,
-    gasPrice: big.int,
+    gasPrice: U256,
     gas: u64,
     to: ?address, // null => contract creation
-    value: big.int,
+    value: U256,
     data: []const u8,
     accessList: []AccessListPair,
-    v: big.int,
-    r: big.int,
-    s: big.int,
+    v: U256,
+    r: U256,
+    s: U256,
 };
