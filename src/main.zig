@@ -1,5 +1,11 @@
 const std = @import("std");
-const types = @import("./types");
+const types = @import("types.zig");
 const deserialize = @import("rlp.zig").deserialize;
 
-pub fn main() anyerror!void {}
+pub fn main() anyerror!void {
+    const txHex = "f9010d820c988601fb43f5fcd58305573094fb5761fde5227d8bb093daf9db87013b3ab9cd2480b8a4a64f79760000000000000000000000000000000000000000000034ba512a057589a000000000000000000000000000000000000000000000000000003706c6edaef5978b000000000000000000000000817bbdbc3e8a1204f3691d14bb44992841e3db35000000000000000000000000cb49221ad08e84b1692f80b62cd5f90c1aadbe6e000000000000000000000000000000000000000000002479f701d0e67f64ac071ba08047cbe4017e75d7c8a04584bb0b4b31f8995d5b3395ce1ff41813cb50fb0c74a064b2e141a14dfba05d13643f9a1e52359fce7db9d581e6dc8c1f7865abefb19c";
+    var txRLP: [txHex.len / 2]u8 = undefined;
+    var tx: types.Tx = undefined;
+    _ = try std.fmt.hexToBytes(txRLP[0..], txHex);
+    _ = try deserialize(types.Tx, txRLP[0..], &tx);
+}
