@@ -47,7 +47,8 @@ pub const AccessListPair = struct {
 pub const Tx = struct {
     chainId: U256,
     nonce: u64,
-    gasPrice: U256,
+    gasTipCap: U256,
+    gasFeeCap: U256,
     gas: u64,
     to: ?address, // null => contract creation
     value: U256,
